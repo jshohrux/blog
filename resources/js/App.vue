@@ -38,8 +38,10 @@
             >
           </li>
           <li v-if="loggedIn">
-            <router-link @click="hideOverlay" :to="{ name: 'Dashboard' }">Dashboard</router-link
-            >
+            <router-link @click="hideOverlay" :to="{ name: 'Dashboard' }">Dashboard</router-link>
+          </li>
+          <li v-if="loggedIn">
+            <router-link @click="hideOverlay" :to="{ name: 'Chat' }">Chat</router-link>
           </li>
         </ul>
       </div>
@@ -51,8 +53,6 @@
           <a href=""><i class="fab fa-instagram"></i></a>
           <a href=""><i class="fab fa-twitter"></i></a>
         </div>
-
-        <small>&copy; 2021 Alphayo Blog</small>
       </footer>
     </div>
     <!-- Menu Button -->
@@ -62,7 +62,7 @@
       <div class="bar"></div>
     </div>
     <!-- main -->
-    <main class="container">
+    <main class="container w-full">
       <!-- render components depending on the page visited -->
 
       <router-view
@@ -74,14 +74,6 @@
     </main>
 
     <!-- Main footer -->
-    <footer class="main-footer">
-      <div>
-        <a href=""><i class="fab fa-facebook-f"></i></a>
-        <a href=""><i class="fab fa-instagram"></i></a>
-        <a href=""><i class="fab fa-twitter"></i></a>
-      </div>
-      <small>&copy; 2021 Alphayo Blog</small>
-    </footer>
   </div>
 </template>
 <script>
@@ -112,7 +104,7 @@ export default {
   },
 
   mounted() {
-    if (localStorage.getItem("authenticated")) {
+    if (localStorage.getItem("token")) {
       this.loggedIn = true;
     } else {
       this.loggedIn = false;

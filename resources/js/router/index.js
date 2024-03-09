@@ -14,6 +14,7 @@ import EditCategories from "../pages/categories/EditCategories.vue";
 import CreatePosts from "../pages/posts/CreatePosts.vue";
 import DashboardPostsList from "../pages/posts/DashboardPostsList.vue";
 import EditPosts from "../pages/posts/EditPosts.vue";
+import Chat from "../pages/Chat.vue";
 
 const routes = [
     {
@@ -58,6 +59,12 @@ const routes = [
         path: "/dashboard",
         name: "Dashboard",
         component: Dashboard,
+        meta: { requiresAuth: true }
+    },
+    {
+        path: "/chat",
+        name: "Chat",
+        component: Chat,
         meta: { requiresAuth: true }
     },
     {
