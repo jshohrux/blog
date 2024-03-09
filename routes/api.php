@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\Auth\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardPostController;
 use App\Http\Controllers\HomeController;
@@ -21,7 +22,7 @@ use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 |
 */
 
-//////////////////////////////////////////////// PRIVATE ROUTES //////////////////////////////////////////////// 
+//////////////////////////////////////////////// PRIVATE ROUTES ////////////////////////////////////////////////
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -39,7 +40,7 @@ Route::middleware('auth:sanctum')->put('posts/{post:slug}', [PostController::cla
 Route::middleware('auth:sanctum')->delete('posts/{post:slug}', [PostController::class, 'destroy']);
 
 
-//////////////////////////////////////////////// PUBLIC ROUTES //////////////////////////////////////////////// 
+//////////////////////////////////////////////// PUBLIC ROUTES ////////////////////////////////////////////////
 Route::post('register', [RegisteredUserController::class, 'store']);
 Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
@@ -52,3 +53,6 @@ Route::get('posts/{post:slug}', [PostController::class, 'show']);
 Route::get('posts', [PostController::class, 'index']);
 Route::get('related-posts/{post:slug}', [RelatedPostController::class, 'index']);
 Route::get('dashboard-posts', [DashboardPostController::class, 'index']);
+
+Route::post('v1/auth/register',[AuthController::class, 'register']);
+Route::post('v1/auth/login',[AuthController::class, 'login']);

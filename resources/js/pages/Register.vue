@@ -1,6 +1,6 @@
 <template>
   <div id="backend-view">
-    <form @submit.prevent="submit">
+    <form @submit.prevent="submit" class="form-control">
       <h3>Sign Up Here</h3>
       <label for="name">Name</label>
       <input type="text" id="name" v-model="fields.name" />
@@ -20,7 +20,11 @@
         id="password_confirmation"
         v-model="fields.password_confirmation"
       />
-
+        <label for="">Select</label>
+        <select class="form-control" v-model="fields.role">
+            <option value="5">Saler</option>
+            <option value="6">Client</option>
+        </select>
       <button type="submit">Sign Up</button>
       <span>Have an account?<a href=""> Log in</a></span>
     </form>
@@ -38,7 +42,7 @@ export default {
   methods: {
     submit() {
       axios
-        .post("/api/register", this.fields)
+        .post("/api/v1/auth/register", this.fields)
         .then(() => {
           this.$router.push({ name: "Dashboard" });
         })

@@ -2,6 +2,7 @@
   <div id="backend-view">
     <form @submit.prevent="submit">
       <h3>Login Here</h3>
+        <span v-if="errors" class="error">{{ errors[0] }}</span>
       <label for="email">Email</label>
       <input type="text" id="email" v-model="fields.email" />
       <span v-if="errors.email" class="error">{{ errors.email[0] }}</span>
@@ -22,19 +23,23 @@ export default {
     return {
       fields: {},
       errors: {},
+        error_message: null
     };
   },
   methods: {
     submit() {
-      axios
-        .post("/api/login", this.fields)
-        .then(() => {
-          this.$router.push({ name: "Dashboard" });
-          localStorage.setItem("authenticated", "true");
-          this.$emit("updateSidebar");
+      const response = axios.post("/api/v1/auth/login", this.fields)
+        .then((response ) => {
+            this.$router.push({ name: "Dashboard" });
+            console.log(response)
+            localStorage.setItem("authenticated", "true");
+            localStorage.setItem("token", response.data.access_token);
+            localStorage.setItem('user',jsonStingfy(response.data.user))
+            this.$emit("updateSidebar");
         })
         .catch((error) => {
-          this.errors = error.response.data.errors;
+          this.errors = error.response.data.message;
+          console.log(this.errors);
         });
     },
   },
