@@ -39,7 +39,12 @@ export default {
   methods: {
     submit() {
       axios
-        .put("/api/categories/" + this.id, this.field)
+        .put("/api/categories/" + this.id, this.field,{
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token'),
+                Accept: 'application/json'
+            },
+        })
         .then(() => {
           this.field = {};
           this.errors = {};

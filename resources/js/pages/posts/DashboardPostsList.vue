@@ -63,7 +63,12 @@ export default {
 
     fetchPosts() {
       axios
-        .get("/api/dashboard-posts")
+        .get("/api/dashboard-posts",{
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token'),
+                Accept: 'application/json'
+            },
+        })
         .then((response) => (this.posts = response.data.data))
         .catch((error) => {
           console.log(error);

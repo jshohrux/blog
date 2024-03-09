@@ -49,10 +49,13 @@ Route::get('categories', [CategoryController::class, 'index']);
 
 // posts
 Route::get('home-posts', [HomeController::class, 'index']);
-Route::get('posts/{post:slug}', [PostController::class, 'show']);
+Route::get('posts/{post:slug}', [PostController::class, 'show'])->middleware('auth:sanctum');
 Route::get('posts', [PostController::class, 'index']);
 Route::get('related-posts/{post:slug}', [RelatedPostController::class, 'index']);
-Route::get('dashboard-posts', [DashboardPostController::class, 'index']);
+Route::get('dashboard-posts', [DashboardPostController::class, 'index'])->middleware('auth:sanctum');
 
 Route::post('v1/auth/register',[AuthController::class, 'register']);
 Route::post('v1/auth/login',[AuthController::class, 'login']);
+Route::post('v1/auth/logout',[AuthController::class,'logout'])->middleware('auth:sanctum');
+
+Route::get('me',[AuthController::class, 'user'])->middleware('auth:sanctum');

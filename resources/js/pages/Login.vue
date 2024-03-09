@@ -34,7 +34,8 @@ export default {
             console.log(response)
             localStorage.setItem("authenticated", "true");
             localStorage.setItem("token", response.data.access_token);
-            localStorage.setItem('user',jsonStingfy(response.data.user))
+            localStorage.setItem('user',JSON.stringify(response.data.user))
+            axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
             this.$emit("updateSidebar");
         })
         .catch((error) => {

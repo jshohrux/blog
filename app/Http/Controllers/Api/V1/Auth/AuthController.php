@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Validator;
@@ -64,5 +65,20 @@ class AuthController extends Controller
             'token_type' => 'Bearer',
             'user' => $user
         ]);
+    }
+
+    public function user(Request $request)
+    {
+        $user = Auth::user();
+        return \response()->json([
+            'user'=>$user,
+            'error'=>null,
+        ]);
+    }
+
+    public function logout(Request $request)
+    {
+        auth()->user()->tokens()->delete();
+        return response()->json(['message' => 'Logged out successfully']);
     }
 }

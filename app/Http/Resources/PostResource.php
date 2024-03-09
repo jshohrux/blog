@@ -20,7 +20,7 @@ class PostResource extends JsonResource
             'slug' => $this->slug,
             'user' => $this->user->name,
             'body' => $this->body,
-            'imagePath' => $this->imagePath,
+            'imagePath' => 'http://127.0.0.1:8000/'.$this->imagePath,
             'category_id' => $this->category_id,
             'created_at' => $this->created_at->diffForHumans(),
         ];
