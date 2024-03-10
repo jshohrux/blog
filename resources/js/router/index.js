@@ -120,12 +120,13 @@ const router = createRouter({
 router.beforeEach((to, from) => {
     const authenticated = localStorage.getItem("authenticated");
     const auth = localStorage.getItem('token');
+    const loggedIn = localStorage.getItem('user')
 
-    if (to.meta.requiresGuest && auth) {
+    if (to.meta.requiresGuest && loggedIn) {
         return {
             name: "Dashboard",
         };
-    } else if (to.meta.requiresAuth && !auth) {
+    } else if (to.meta.requiresAuth && !loggedIn) {
         return {
             name: "Login",
         };

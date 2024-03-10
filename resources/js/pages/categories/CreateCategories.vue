@@ -38,7 +38,12 @@ export default {
   methods: {
     submit() {
       axios
-        .post("/api/categories/create", this.field)
+        .post("/api/categories/create", this.field,{
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token'),
+                Accept: 'application/json'
+            },
+        })
         .then(() => {
           this.field = {};
           this.errors = {};

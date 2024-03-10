@@ -2,24 +2,24 @@
   <div id="backend-view">
     <div class="logout"><a href="#" @click="logout">Log out</a></div>
     <h1 class="heading">Dashboard</h1>
-    <span>Hi {{ name }}!</span>
+    <span>Hi {{ user.name }}!</span>
     <div class="links">
       <ul>
         <li>
-          <router-link :to="{ name: 'CreatePosts' }">Create Posts</router-link>
+          <router-link :to="{ user: 'CreatePosts' }">Create Posts</router-link>
         </li>
         <li>
-          <router-link :to="{ name: 'DashboardPostsList' }"
+          <router-link :to="{ user: 'DashboardPostsList' }"
             >Posts List</router-link
           >
         </li>
         <li>
-          <router-link :to="{ name: 'CreateCategories' }"
+          <router-link :to="{ user: 'CreateCategories' }"
             >Create Categories</router-link
           >
         </li>
         <li>
-          <router-link :to="{ name: 'CategoriesList' }"
+          <router-link :to="{ user: 'CategoriesList' }"
             >Categories List</router-link
           >
         </li>
@@ -32,18 +32,25 @@
 export default {
   data() {
     return {
-      name: "",
+      user: "",
     };
   },
   mounted() {
     axios
-      .get("/api/user")
-      .then((response) => (this.name = response.data.name))
+      .get("/api/me",{
+          headers: {
+              Authorization: "Bearer " + localStorage.getItem('token'),
+              Accept: 'application/json'
+          },
+      })
+      .then((response) => {(this.user = response.data.user)
+            console.log(response.data)
+      })
       .catch((error) => {
         if (error.response.status === 401) {
           this.$emit("updateSidebar");
           localStorage.removeItem("authenticated");
-          this.$router.push({ name: "Login" });
+          this.$router.push({ user: "Login" });
         }
       });
   },
@@ -51,10 +58,12 @@ export default {
   methods: {
     logout() {
       axios
-        .post("/api/logout")
+        .post("/api/v1/auth/logout")
         .then((response) => {
           this.$router.push({ name: "Home" });
           localStorage.removeItem("authenticated");
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
           this.$emit("updateSidebar");
         })
         .catch((error) => console.log(error));

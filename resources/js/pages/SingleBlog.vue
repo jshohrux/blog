@@ -8,7 +8,7 @@
     </p>
 
     <div class="single-blog-post-ContentImage" data-aos="fade-left">
-      <img :src="`/${post.imagePath}`" alt="" />
+      <img :src="`${post.imagePath}`" alt="" />
     </div>
 
     <div class="about-text">
@@ -29,7 +29,7 @@
         }"
       >
         <div class="recommended-card">
-          <img :src="`/${relatedPost.imagePath}`" alt="" loading="lazy" />
+          <img :src="`${relatedPost.imagePath}`" alt="" loading="lazy" />
           <h4>{{ relatedPost.title }}</h4>
         </div>
       </router-link>
