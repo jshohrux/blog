@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import AuthService from "../service/auth";
+import PostService from "../service/post";
 
 export const useStoreData = defineStore("dataStore", {
   state: () => {
@@ -7,6 +8,7 @@ export const useStoreData = defineStore("dataStore", {
       user: null,
       isLoading: false,
       error: null,
+      post: null,
       isLogedIn: false,
     };
   },
@@ -93,9 +95,29 @@ export const useStoreData = defineStore("dataStore", {
       this.code = 201;
 
       localStorage.removeItem("token");
+      localStorage.removeItem("authenticated");
     },
 
-    
+    homePost() {
+        return new Promise((resolve) => {
+          this.isLoading = true;
+          PostService.homePost()
+            .then((response) => {
+              console.log(response);
+              this.post = response.data;
+              this.error = null;
+              resolve(response.data);
+            })
+            .catch(() => {
+              this.post = null;
+              this.isLoading = false;
+            })
+            .finally(() => {
+              this.isLoading = false;
+            });
+        });
+      },
+
 
   },
 });

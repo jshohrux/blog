@@ -122,11 +122,11 @@ router.beforeEach((to, from) => {
     // const auth = localStorage.getItem('token');
     const loggedIn = localStorage.getItem('token')
 
-    if (to.meta.requiresGuest && loggedIn) {
+    if (to.meta.requiresGuest && authenticated) {
         return {
             name: "Dashboard",
         };
-    } else if (to.meta.requiresAuth && !loggedIn) {
+    } else if (to.meta.requiresAuth && !authenticated) {
         return {
             name: "Login",
         };

@@ -112,7 +112,7 @@ export default {
   },
 
   async mounted() {
-    await this.users;
+      await this.users;
   },
 };
 </script>
