@@ -52,4 +52,28 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class,'role_id');
     }
+
+    public function isAdmin()
+    {
+        if($this->role?->name=='Admin'){
+            return true;
+        }
+        return false;
+    }
+
+    public function isSaler()
+    {
+        if($this->role?->name=='Saler'){
+            return true;
+        }
+        return false;
+    }
+
+    public function isClient()
+    {
+        if($this->role?->name=='Client'){
+            return true;
+        }
+        return false;
+    }
 }
