@@ -77,6 +77,8 @@
   </div>
 </template>
 <script>
+import { mapActions, mapState } from 'pinia'
+import { useStoreData } from '@/stores/store'
 export default {
   data() {
     return {
@@ -84,6 +86,12 @@ export default {
       loggedIn: false,
       editSuccess: false,
     };
+  },
+  computed: {
+    ...mapActions(useStoreData, { users: 'users' }),
+    currentRouteName() {
+      return this.$route.name;
+    },
   },
   methods: {
     ShowOverlay() {
@@ -103,12 +111,8 @@ export default {
     },
   },
 
-  mounted() {
-    if (localStorage.getItem("token")) {
-      this.loggedIn = true;
-    } else {
-      this.loggedIn = false;
-    }
+  async mounted() {
+    await this.users;
   },
 };
 </script>

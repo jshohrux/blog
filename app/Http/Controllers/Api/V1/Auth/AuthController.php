@@ -69,6 +69,7 @@ class AuthController extends Controller
 
     public function user(Request $request)
     {
+
         $user = Auth::user();
         return \response()->json([
             'user'=>$user,
@@ -76,9 +77,9 @@ class AuthController extends Controller
         ]);
     }
 
-    public function logout(Request $request)
-    {
-        auth()->user()->tokens()->delete();
-        return response()->json(['message' => 'Logged out successfully']);
-    }
+    // public function logout(Request $request)
+    // {
+    //     auth()->user()->tokens()->delete();
+    //     return response()->json(['message' => 'Logged out successfully']);
+    // }
 }

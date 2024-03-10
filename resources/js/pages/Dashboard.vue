@@ -1,6 +1,6 @@
 <template>
   <div id="backend-view">
-    <div class="logout"><a href="#" @click="logout">Log out</a></div>
+    <div class="logout"><a href="#" @click="logoutHandler">Log out</a></div>
     <h1 class="heading">Dashboard</h1>
     <span>Hi {{ user.name }}!</span>
     <div class="links">
@@ -29,44 +29,24 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'pinia'
+import { useStoreData } from '@/stores/store'
 export default {
+
   data() {
     return {
       user: "",
     };
   },
   mounted() {
-    axios
-      .get("/api/me",{
-          headers: {
-              Authorization: "Bearer " + localStorage.getItem('token'),
-              Accept: 'application/json'
-          },
-      })
-      .then((response) => {(this.user = response.data.user)
-            console.log(response.data)
-      })
-      .catch((error) => {
-        if (error.response.status === 401) {
-          this.$emit("updateSidebar");
-          localStorage.removeItem("authenticated");
-          this.$router.push({ user: "Login" });
-        }
-      });
+
   },
 
   methods: {
-    logout() {
-      axios
-        .post("/api/v1/auth/logout")
-        .then((response) => {
-          this.$router.push({ name: "Home" });
-          localStorage.removeItem("authenticated");
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-          this.$emit("updateSidebar");
-        })
-        .catch((error) => console.log(error));
+    ...mapActions(useStoreData, { logout: 'logout'}),
+    logoutHandler() {
+        this.logout();
+        this.$router.push("/login");
     },
   },
 };

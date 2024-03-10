@@ -119,8 +119,8 @@ const router = createRouter({
 
 router.beforeEach((to, from) => {
     const authenticated = localStorage.getItem("authenticated");
-    const auth = localStorage.getItem('token');
-    const loggedIn = localStorage.getItem('user')
+    // const auth = localStorage.getItem('token');
+    const loggedIn = localStorage.getItem('token')
 
     if (to.meta.requiresGuest && loggedIn) {
         return {

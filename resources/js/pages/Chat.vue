@@ -11,7 +11,7 @@
             </div>
             <div class="flex  gap-2 items-center">
                 <div class="h-[calc(100vh-100px)] w-full flex flex-col justify-end">
-                    <div class="py-5 px-10 w-full h-screen overflow-y-auto">
+                    <div class="py-5 px-10 w-full  overflow-y-auto">
                         <div class="flex items-end flex-col w-full">
                             <div class="border rounded-xl leading-relaxed">
                                 <div class="px-5 py-2">
