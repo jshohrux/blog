@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\Auth\AuthController;
+use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardPostController;
 use App\Http\Controllers\HomeController;
@@ -28,34 +29,36 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth:sanctum')->post('logout', [AuthenticatedSessionController::class, 'destroy']);
-// categories
-Route::middleware('auth:sanctum')->post('categories/create', [CategoryController::class, 'store']);
-Route::middleware('auth:sanctum')->get('categories/{category}', [CategoryController::class, 'show']);
-Route::middleware('auth:sanctum')->put('categories/{category}', [CategoryController::class, 'update']);
-Route::middleware('auth:sanctum')->delete('categories/{category}', [CategoryController::class, 'destroy']);
-
-// posts
-Route::middleware('auth:sanctum')->post('posts', [PostController::class, 'store']);
-Route::middleware('auth:sanctum')->put('posts/{post:slug}', [PostController::class, 'update']);
-Route::middleware('auth:sanctum')->delete('posts/{post:slug}', [PostController::class, 'destroy']);
 
 
-//////////////////////////////////////////////// PUBLIC ROUTES ////////////////////////////////////////////////
-Route::post('register', [RegisteredUserController::class, 'store']);
-Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
-// categories
-Route::get('categories', [CategoryController::class, 'index']);
 
-// posts
-Route::get('home-posts', [HomeController::class, 'index']);
-Route::get('posts/{post:slug}', [PostController::class, 'show'])->middleware('auth:sanctum');
-Route::get('posts', [PostController::class, 'index']);
-Route::get('related-posts/{post:slug}', [RelatedPostController::class, 'index']);
-Route::get('dashboard-posts', [DashboardPostController::class, 'index'])->middleware('auth:sanctum');
 
-Route::post('v1/auth/register',[AuthController::class, 'register']);
-Route::post('v1/auth/login',[AuthController::class, 'login']);
-Route::post('v1/auth/logout',[AuthController::class,'logout'])->middleware('auth:sanctum');
+Route::group(['prefix'=>'v1/auth'], function (){
+    Route::post('register',[AuthController::class, 'register']);
+    Route::post('login',[AuthController::class, 'login']);
+    Route::post('logout',[AuthController::class,'logout'])->middleware('auth:sanctum');
+});
 
-Route::get('me',[AuthController::class, 'user'])->middleware('auth:sanctum');
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('me',[AuthController::class, 'user']);
+    Route::get('posts/{post:slug}', [PostController::class, 'show']);
+    Route::get('posts', [PostController::class, 'index']);
+    Route::get('categories', [CategoryController::class, 'index']);
+    Route::get('home-posts', [HomeController::class, 'index']);
+    Route::get('related-posts/{post:slug}', [RelatedPostController::class, 'index']);
+    Route::get('dashboard-posts', [DashboardPostController::class, 'index']);
+
+    // posts
+    Route::post('posts', [PostController::class, 'store']);
+    Route::put('posts/{post:slug}', [PostController::class, 'update']);
+    Route::delete('posts/{post:slug}', [PostController::class, 'destroy']);
+
+    // categories
+    Route::post('categories/create', [CategoryController::class, 'store']);
+    Route::get('categories/{category}', [CategoryController::class, 'show']);
+    Route::put('categories/{category}', [CategoryController::class, 'update']);
+    Route::delete('categories/{category}', [CategoryController::class, 'destroy']);
+    Route::get('users',[UserController::class, 'users']);
+    Route::get('roles',[UserController::class, 'roles']);
+});
