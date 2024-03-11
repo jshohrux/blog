@@ -41,7 +41,7 @@ export default {
     mounted() {
         this.homePost()
             .then((res) => {
-                 this.posts = res;
+                 this.posts = res.data;
             })
             .catch((err) => console.log("error", err));
     },

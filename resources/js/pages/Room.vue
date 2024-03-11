@@ -27,19 +27,18 @@
             </div>
         </div>
         <div class="px-5 py-3 w-full">
-            <form method="post" class="flex items-center" @submit.prevent="e.preventDefault()">
+            <form method="post" class="flex items-center" @submit.prevent>
                 <input type="text" v-model="message"
                     class="bg-[#1E2126] rounded-lg w-full pl-6 py-3 border-2  text-md border-[#0a0b0c]  text-white placeholder:text-slate-400"
                     placeholder="Write any message">
-                 <button type="submit" @click="sendMessageHadnler">
-                     <svg data-slot="icon" fill="none" class="w-8 h-8 mx-5 text-white cursor-pointer " stroke-width="1.5"
-                         stroke="currentColor" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <button type="submit" @click="sendMessageHadnler">
+                    <svg data-slot="icon" fill="none" class="w-8 h-8 mx-5 text-white cursor-pointer " stroke-width="1.5"
+                        stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5">
                         </path>
                     </svg>
-                 </button>
+                </button>
             </form>
         </div>
     </div>
@@ -90,7 +89,6 @@ export default {
                 .catch((error) => {
                     console.log(error);
                 });
-            // console.log(data);
         }
     },
     async mounted() {

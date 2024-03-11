@@ -59,7 +59,6 @@ export default {
      computed:{
          ...mapActions(useStoreData,{ chatUserList: "chatUserList" }),
         ...mapState(useStoreData, ["conversation"]),
-
      },
      async mounted() {
         await this.chatUserList;

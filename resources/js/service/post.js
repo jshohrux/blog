@@ -10,6 +10,12 @@ const PostService = {
     homePost(){
         return axios.get('home-posts',{headers:{'Content-Type': 'application/json;'}})
     },
+    posts(){
+        return axios.get('posts',{headers:{'Content-Type': 'application/json;'}})
+    },
+    pagination(page){
+        return axios.get(page,{headers:{'Content-Type': 'application/json;'}})
+    },
 }
 
 export default PostService

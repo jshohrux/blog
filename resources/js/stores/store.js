@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import AuthService from "../service/auth";
 import PostService from "../service/post";
 import ChatService from "../service/chat";
+import CategoriesService from "../service/categories";
 
 export const useStoreData = defineStore("dataStore", {
     state: () => {
@@ -10,9 +11,10 @@ export const useStoreData = defineStore("dataStore", {
             isLoading: false,
             user: null,
             error: null,
-            post: null,
+            postsData: null,
             conversation: null,
             roomData: null,
+            categories: null,
         };
     },
     actions: {
@@ -74,10 +76,10 @@ export const useStoreData = defineStore("dataStore", {
                 AuthService.user()
                     .then((response) => {
                         console.log(response);
-                        this.user = response.data.user;
+                        this.user = response.data;
                         this.isLogedIn = true;
                         this.error = null;
-                        resolve(response.data.user);
+                        resolve(response.data);
                     })
                     .catch(() => {
                         this.user = null;
@@ -107,12 +109,69 @@ export const useStoreData = defineStore("dataStore", {
                 PostService.homePost()
                     .then((response) => {
                         console.log(response);
-                        this.post = response.data;
+                        // this.postsData = response.data.data;
                         this.error = null;
                         resolve(response.data);
                     })
                     .catch(() => {
-                        this.post = null;
+                        this.postsData = null;
+                        this.isLoading = false;
+                    })
+                    .finally(() => {
+                        this.isLoading = false;
+                    });
+            });
+        },
+        postsAction() {
+            return new Promise((resolve) => {
+                this.isLoading = true;
+                PostService.posts()
+                    .then((response) => {
+                        console.log(response);
+                        this.postsData = response.data;
+                        this.error = null;
+                        resolve(response.data);
+                    })
+                    .catch(() => {
+                        this.postsData = null;
+                        this.isLoading = false;
+                    })
+                    .finally(() => {
+                        this.isLoading = false;
+                    });
+            });
+        },
+        paginat(page) {
+            return new Promise((resolve) => {
+                this.isLoading = true;
+                PostService.pagination(page)
+                    .then((response) => {
+                        console.log(response);
+                        this.postsData = response.data;
+                        this.error = null;
+                        resolve(response.data);
+                    })
+                    .catch(() => {
+                        this.postsData = null;
+                        this.isLoading = false;
+                    })
+                    .finally(() => {
+                        this.isLoading = false;
+                    });
+            });
+        },
+        categoriesAction() {
+            return new Promise((resolve) => {
+                this.isLoading = true;
+                CategoriesService.categor()
+                    .then((response) => {
+                        console.log(response);
+                        this.categories = response.data;
+                        this.error = null;
+                        resolve(response.data);
+                    })
+                    .catch(() => {
+                        this.categories = null;
                         this.isLoading = false;
                     })
                     .finally(() => {
