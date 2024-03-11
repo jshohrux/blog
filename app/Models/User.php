@@ -42,6 +42,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function conversation()
+    {
+        return $this->hasMany(Conver::class,'seller_id')->with('conversationClent');
+    }
 
     public function posts()
     {

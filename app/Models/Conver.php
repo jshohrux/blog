@@ -12,4 +12,17 @@ class Conver extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = ['room_name','seller_id', 'clent_id'];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function conversationClent()
+    {
+        return $this->belongsTo(User::class,'clent_id');
+    }
+    public function room()
+    {
+        return $this->hasMany(Room::class)->with('senderUser','getterUser');
+    }
 }

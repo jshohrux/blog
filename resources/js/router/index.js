@@ -15,6 +15,7 @@ import CreatePosts from "../pages/posts/CreatePosts.vue";
 import DashboardPostsList from "../pages/posts/DashboardPostsList.vue";
 import EditPosts from "../pages/posts/EditPosts.vue";
 import Chat from "../pages/Chat.vue";
+import Room from "../pages/Room.vue";
 
 const routes = [
     {
@@ -65,7 +66,15 @@ const routes = [
         path: "/chat",
         name: "Chat",
         component: Chat,
-        meta: { requiresAuth: true }
+        meta: { requiresAuth: true },
+        children:[
+                {
+                    path: "room/:id",
+                    name: "Room",
+                    component: Room,
+                }
+
+        ]
     },
     {
         path: "/categories/create",

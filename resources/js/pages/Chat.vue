@@ -1,52 +1,16 @@
 <template>
 
     <div class="flex w-[calc(100vw-305px)]">
-        <div class="h-screen bg-neutral-950 w-5/6">
-            <div class="px-5 py-6 border-b-[1px] border-[#7a7777]">
+        <div class="h-screen bg-[#15191C] w-5/6">
+            <div class="px-5 py-6 border-b-[1px] border-[#7a7777] bg-black">
                 <div class="flex gap-2 items-center">
                     <div>
                         <h1 class="text-2xl font-bold text-white">Message</h1>
                     </div>
                 </div>
             </div>
-            <div class="flex  gap-2 items-center">
-                <div class="h-[calc(100vh-100px)] w-full flex flex-col justify-end">
-                    <div class="py-5 px-10 w-full  overflow-y-auto">
-                        <div class="flex items-end flex-col w-full">
-                            <div class="border rounded-xl leading-relaxed">
-                                <div class="px-5 py-2">
-                                    <h1>Salom</h1>
-                                </div>
-                            </div>
-                            <p class="text-[11px] mt-1">12:11</p>
-                        </div>
-                        <div class="flex items-start  flex-col w-full">
-                            <div class="flex gap-3">
-                                <div class="bg-white w-fit h-fit px-3 font-mono font-semibold text-lg py-2 rounded-full">Dn</div>
-                                <div class="border rounded-xl bg-white leading-relaxed">
-                                    <div class="px-5 py-2 text-black">
-                                        <h1>Salom</h1>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="text-[11px] mt-1">12:11</p>
-                        </div>
-                    </div>
-                    <div class="px-5 py-3 w-full">
-                        <form method="post" class="flex items-center">
-                            <input type="text"
-                                class="border bg-transparent rounded-xl w-full px-3 py-3 text-white placeholder:text-slate-400"
-                                placeholder="write any message">
-                            <svg data-slot="icon" fill="none" class="w-8 h-8 mx-5 cursor-pointer " stroke-width="1.5"
-                                stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-                                aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5">
-                                </path>
-                            </svg>
-                        </form>
-                    </div>
-                </div>
+            <div class="flex gap-2 items-center">
+                <router-view></router-view>
             </div>
         </div>
         <div class="h-screen border-l-[1px] border-[#7a7777] bg-neutral-950 w-2/6">
@@ -61,21 +25,45 @@
                     </svg>
                 </div>
             </div>
-            <div class="px-5 py-3 border-[1px] border-[#7a7777] border-x-0 -mt-[1px]">
-                <div class="flex gap-2 items-center cursor-pointer">
-                    <div class="bg-white w-fit h-fit px-3 font-mono font-semibold text-lg py-2 rounded-full">Dn</div>
-                    <div>
-                        <h1 class="text-2xl font-bold text-white">salom</h1>
-                        <p>messafe</p>
-                    </div>
-                </div>
-            </div>
+            <!-- <p>{{ conversation }}</p> -->
+          <div v-for="conver in conversation">
+              <RouterLink :to="{ name: 'Room', params: { id:conver['id'] }}">
+                  <div class="px-5 py-3 border-[1px] border-[#7a7777] border-x-0 -mt-[1px]" >
+                      <div class="flex gap-2 items-center cursor-pointer">
+                          <div class="bg-white w-fit h-fit px-2 text-center  font-semibold text-sm capitalize py-2 rounded-full">{{ getLetterAfterSpace(conver['conversation_clent']['name']) }}</div>
+                          <div>
+                              <h1 class="text-lg font-bold text-white">{{ conver['conversation_clent']['name'] }}</h1>
+                              <p>messafe</p>
+                          </div>
+                      </div>
+                  </div>
+              </RouterLink>
+          </div>
         </div>
     </div>
 </template>
+<script setup>
+   function getLetterAfterSpace(text) {
+    const words = text.split(' ');
+    const lastWord = words[words.length - 1];
+    const lastLetter = lastWord.charAt(0);
+    const firstLetters = text.charAt(0);
+    return firstLetters+lastLetter
+}
+</script>
 <script>
-export default {
+import { mapActions, mapState } from 'pinia'
+import { useStoreData } from '@/stores/store'
 
+export default {
+     computed:{
+         ...mapActions(useStoreData,{ chatUserList: "chatUserList" }),
+        ...mapState(useStoreData, ["conversation"]),
+
+     },
+     async mounted() {
+        await this.chatUserList;
+     },
 }
 </script>
 <style></style>

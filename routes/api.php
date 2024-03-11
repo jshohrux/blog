@@ -7,6 +7,8 @@ use App\Http\Controllers\DashboardPostController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RelatedPostController;
+use App\Http\Controllers\ChatController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
@@ -62,5 +64,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('categories/{category}', [CategoryController::class, 'destroy']);
     Route::get('users',[UserController::class, 'users']);
     Route::get('roles',[UserController::class, 'roles']);
+
+    // chat
+    Route::get('chatUserList',[ChatController::class, 'index']);
+    Route::get('roomInformation/{id}',[ChatController::class, 'showRoom']);
+    Route::post('send_message',[ChatController::class, 'sendMessage']);
 });
 
