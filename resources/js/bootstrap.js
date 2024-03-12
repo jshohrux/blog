@@ -27,7 +27,7 @@ window.Echo = new Echo({
   broadcaster: 'pusher',
   host: 'http://127.0.0.1:8000',
   key: '18f8d7457b2a1c539116333442003',
-  wsHost:'http://127.0.0.1:8000',
+  wsHost:'127.0.0.1',
   wsPort: 6001,
   cluster: "ap2",
   forceTLS: false,
@@ -40,4 +40,5 @@ window.Echo = new Echo({
           Authorization: 'Bearer '+token,
           Accept: 'application/json',
       }
-  }});
+  },
+});
