@@ -6,16 +6,16 @@
         <div class="links">
             <ul>
                 <li>
-                    <router-link :to="{ user: 'CreatePosts' }">Create Posts</router-link>
+                    <router-link :to="{ name: 'CreatePosts' }">Create Posts</router-link>
                 </li>
                 <li>
-                    <router-link :to="{ user: 'DashboardPostsList' }">Posts List</router-link>
+                    <router-link :to="{ name: 'DashboardPostsList' }">Posts List</router-link>
                 </li>
                 <li>
-                    <router-link :to="{ user: 'CreateCategories' }">Create Categories</router-link>
+                    <router-link :to="{ name: 'CreateCategories' }">Create Categories</router-link>
                 </li>
                 <li>
-                    <router-link :to="{ user: 'CategoriesList' }">Categories List</router-link>
+                    <router-link :to="{ name: 'CategoriesList' }">Categories List</router-link>
                 </li>
             </ul>
         </div>
@@ -26,7 +26,6 @@
 import { mapActions, mapState } from 'pinia'
 import { useStoreData } from '@/stores/store'
 export default {
-
     data() {
         return {
             user: "",

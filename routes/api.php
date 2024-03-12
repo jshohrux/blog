@@ -41,6 +41,7 @@ Route::group(['prefix'=>'v1/auth'], function (){
     Route::post('login',[AuthController::class, 'login']);
     Route::post('logout',[AuthController::class,'logout'])->middleware('auth:sanctum');
 });
+Route::get('roles',[UserController::class, 'roles']);
 
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -63,7 +64,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('categories/{category}', [CategoryController::class, 'update']);
     Route::delete('categories/{category}', [CategoryController::class, 'destroy']);
     Route::get('users',[UserController::class, 'users']);
-    Route::get('roles',[UserController::class, 'roles']);
 
     // chat
     Route::get('chatUserList',[ChatController::class, 'index']);

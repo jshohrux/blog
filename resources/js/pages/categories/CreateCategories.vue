@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -38,7 +40,7 @@ export default {
   methods: {
     submit() {
       axios
-        .post("/api/categories/create", this.field,{
+        .post("categories/create", this.field,{
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('token'),
                 Accept: 'application/json'

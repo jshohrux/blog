@@ -7,6 +7,7 @@ use App\Models\Conver;
 use App\Models\Room;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Events\RoomPrivate;
 
 class ChatController extends Controller
 {
@@ -29,6 +30,10 @@ class ChatController extends Controller
             'conver_id' => $request->get('param'),
             'message' => $request->get('message'),
         ]);
+        if ($mess) {
+            RoomPrivate::dispatch($user, $mess);
+            return response()->json(['status' => true]);
+        }
         // return $mess;
     }
 }

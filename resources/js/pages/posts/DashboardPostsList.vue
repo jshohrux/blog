@@ -36,6 +36,8 @@
   </div>
 </template>
 <script>
+import axios from 'axios';
+
 export default {
   props: ["editSuccess"],
   emits: ["updateSidebar"],
@@ -48,7 +50,7 @@ export default {
   methods: {
     destroy(slug) {
       axios
-        .delete(`/api/posts/${slug}`)
+        .delete(`posts/${slug}`)
         .then(() => {
           this.fetchPosts();
           this.success = true;
@@ -63,7 +65,7 @@ export default {
 
     fetchPosts() {
       axios
-        .get("/api/dashboard-posts",{
+        .get("dashboard-posts",{
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('token'),
                 Accept: 'application/json'

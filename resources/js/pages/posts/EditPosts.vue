@@ -55,6 +55,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   props: ["slug"],
   data() {
@@ -89,7 +91,7 @@ export default {
       fd.append("_method", "PUT");
 
       axios
-        .post(`/api/posts/${this.slug}`, fd, {
+        .post(`posts/${this.slug}`, fd, {
           headers: {
             "content-type": "multipart/form-data",
           },
@@ -110,14 +112,14 @@ export default {
 
   mounted() {
     axios
-      .get("/api/categories")
+      .get("categories")
       .then((response) => (this.categories = response.data))
       .catch((error) => {
         console.log(error);
       });
 
     axios
-      .get("/api/posts/" + this.slug)
+      .get("posts/" + this.slug)
       .then((response) => {
         this.fields = response.data.data;
         this.url = "/" + response.data.data.imagePath;

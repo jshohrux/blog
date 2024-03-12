@@ -33,7 +33,7 @@ export default {
         submit() {
             this.login(this.fields)
                 .then((user) => {
-                    this.$router.push({ name: "Dashboard" });
+                    this.$router.push({ name: "Home" });
                     this.$emit("updateSidebar");
                 })
                 .catch((err) => console.log("error", err));
