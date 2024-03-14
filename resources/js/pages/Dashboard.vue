@@ -26,10 +26,8 @@
 import { mapActions, mapState } from 'pinia'
 import { useStoreData } from '@/stores/store'
 export default {
-    data() {
-        return {
-            user: "",
-        };
+    computed: {
+        ...mapState(useStoreData, ["user"])
     },
     methods: {
     ...mapActions(useStoreData, { logout: 'logout'}),

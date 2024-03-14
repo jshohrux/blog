@@ -4,7 +4,7 @@
 
         <p class="time-and-author">
             {{ post.created_at }}
-            <span>Written By {{ post.user }}</span>
+            <span v-if="post.user != null">Written By {{ post.user.name }}</span>
         </p>
 
         <div class="single-blog-post-ContentImage" data-aos="fade-left">
@@ -32,51 +32,13 @@
             </router-link>
         </div>
     </section>
-    <div v-if="store.user.role.id != 2">
-        <div :class="{'invisible opacity-0': !this.chatMenu,'visible opacity-1': this.chatMenu}" style="transition: visibility 0s linear 0.33s, opacity 0.33s linear;" >
-            <div class="chat-box fixed bottom-10 right-10">
-                <div class="w-full flex justify-between py-5 px-3 rounded-t-xl bg-white border-b-2 shadow">
-                    <h1>sadlom</h1>
-                    <svg xmlns="http://www.w3.org/2000/svg" @click="this.chatMenu = false" viewBox="0 0 24 24" fill="currentColor" class="cursor-pointer w-6 h-6">
-                        <path fill-rule="evenodd"
-                            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365
-                            9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94
-                            12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06
-                            12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z"
-                            clip-rule="evenodd" />
-                    </svg>
-
-                </div>
-                <div class="chat-room">
-                    <div class="message message-left">
-                        <div class="bubble bubble-light">
-                            Hey anhat!
-                        </div>
-                    </div>
-                    <div class="message message-right">
-                        <div class="bubble bubble-dark">
-                            what is going on?
-                        </div>
-                    </div>
-                </div>
-                <div class="type-area">
-                    <div class="input-wrapper">
-                        <input type="text" id="inputText" placeholder="Type messages here..." />
-                    </div>
-                    <button class="button-send">Send</button>
-                </div>
-
-            </div>
-        </div>
-        <div class="p-2 cursor-pointer bg-white w-fit fixed right-10 bottom-10 rounded-2xl" @click="this.chatMenu = true" style="transition: visibility 0s linear 0.33s, opacity 0.33s linear;" :class="{'invisible opacity-0': this.chatMenu,'visible opacity-1': !this.chatMenu}">
+        <div class="p-2 cursor-pointer bg-white w-fit fixed right-10 bottom-10 rounded-2xl" @click="getConversation">
             <svg xmlns="http://www.w3.org/2000/svg"  class="w-7 h-7 text-black" viewBox="0 0 24 24" fill="currentColor">
                 <path fill-rule="evenodd"
                     d="M4.804 21.644A6.707 6.707 0 0 0 6 21.75a6.721 6.721 0 0 0 3.583-1.029c.774.182 1.584.279 2.417.279 5.322 0 9.75-3.97 9.75-9 0-5.03-4.428-9-9.75-9s-9.75 3.97-9.75 9c0 2.409 1.025 4.587 2.674 6.192.232.226.277.428.254.543a3.73 3.73 0 0 1-.814 1.686.75.75 0 0 0 .44 1.223ZM8.25 10.875a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25ZM10.875 12a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Zm4.875-1.125a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25Z"
                     clip-rule="evenodd" />
             </svg>
-
         </div>
-    </div>
 </template>
 <script setup>
 import { useStoreData } from '@/stores/store';
@@ -85,6 +47,7 @@ const store = useStoreData();
 </script>
 <script>
 import axios from 'axios';
+import { mapActions, mapState } from 'pinia';
 
 export default {
     emits: ["updateSidebar"],
@@ -96,7 +59,30 @@ export default {
             chatMenu: false,
         };
     },
+    methods:{
+        ...mapActions(useStoreData, { conver: 'conver'}),
+        getConversation() {
+            const store = useStoreData();
+            console.log(store.user.id)
+            const data = {
+                'seller_id': this.post.user.id,
+                'client_id': store.user.id
+            }
+            console.log(this.post.user.id);
+
+            this.conver(data)
+                .then((res) => {
+                    // this.$router.push({ name: "Dashboard" });
+                })
+                .catch((err) => {
+                    console.log("error", err)
+                    this.errors = err.errors;
+                });
+
+        },
+    },
     mounted() {
+
         axios
             .get("posts/" + this.slug)
             .then((response) => (this.post = response.data.data))
@@ -110,6 +96,9 @@ export default {
             .catch((error) => {
                 console.log(error);
             });
+
+
+
     },
 };
 </script>

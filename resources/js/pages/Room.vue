@@ -11,10 +11,10 @@
                     </div>
 
                 </div>
-                <div class="flex items-start  flex-col w-full" v-else-if="data['sender_id'] !== user['id']">
+                <div class="flex items-start  flex-col w-full" v-else-if="data['sender_id'] !== user['id'] && data['sender_id'] != null">
                     <div class="flex gap-3 items-center">
-                        <div class="bg-white w-fit  p-2 font-semibold text-md  rounded-full">{{
-                getLetterAfterSpace(data['sender_user']['name']) }}
+                        <div class="bg-white w-fit  p-2 font-semibold text-md  rounded-full">
+                            {{getLetterAfterSpace(data['sender_user']['name']) }}
                         </div>
                         <div class="border rounded-xl bg-white leading-relaxed">
                             <div class="px-5 py-2 text-black  max-w-96 break-all">
@@ -72,6 +72,14 @@ export default {
     computed: {
         ...mapState(useStoreData, ["user", 'roomData']),
 
+    },
+    watch: {
+        user(newValue, oldValue) {
+            window.Echo.private('channel.1').listen('RoomPrivate', (e) => {
+                console.log(e);
+                console.log('asdasd  ishlamoqda ishlamoqda ishlamoq');
+            });
+        }
     },
     methods: {
         ...mapActions(useStoreData, { roomInfo: "roomInfo", sendMess: "sendMess" }),

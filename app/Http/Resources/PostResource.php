@@ -18,7 +18,7 @@ class PostResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'slug' => $this->slug,
-            'user' => $this->user->name,
+            'user' => $this->user,
             'body' => $this->body,
             'imagePath' => 'http://127.0.0.1:8000/'.$this->imagePath,
             'category_id' => $this->category_id,

@@ -22,31 +22,31 @@ import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 window.Pusher = Pusher;
 
-// const token = localStorage.getItem('token')
+
 // window.Echo = new Echo({
-//   broadcaster: 'pusher',
-//   host: 'http://127.0.0.1:8000',
-//   key: '18f8d7457b2a1c539116333442003',
-//   wsHost:'127.0.0.1',
-//   wsPort: 6001,
-//   cluster: "ap2",
-//   forceTLS: false,
-//   disableStats: true,
-//   encrypted: true,
-//   authEndpoint :'http://127.0.0.1:8000/api/broadcasting/auth',
-//   enabledTransports: ['ws', 'wss'],
-//   auth:{
-//       headers: {
-//           Authorization: 'Bearer '+token,
-//           Accept: 'application/json',
-//       }
-//   },
+//     broadcaster: 'pusher',
+//     key: '18f8d7457b2a1c539116333442003',
+//     wsHost:'127.0.0.1',
+//     wsPort: 6001,
+//     cluster: "ap1",
+//     forceTLS: false,
+//     disableStats: true,
+//     authEndpoint: "http://127.0.0.1:8000/api/broadcasting/auth",
+//     auth: {
+//         headers: {
+//             Authorization: 'Bearer ' + localStorage.getItem('token'),
+//             Accept: 'application/json',
+
+//         }
+//     },
+
 // });
+// const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
 const token = localStorage.getItem('token')
 window.Echo = new Echo({
   broadcaster: 'pusher',
-  host: 'http://127.0.0.1:8000',
+  host: '127.0.0.1:8000',
   key: '18f8d7457b2a1c539116333442003',
   wsHost:'127.0.0.1',
   wsPort: 6001,
@@ -58,8 +58,8 @@ window.Echo = new Echo({
   enabledTransports: ['ws', 'wss'],
   auth:{
       headers: {
-          Authorization: 'Bearer '+token,
-          Accept: 'application/json',
+          Authorization: 'Bearer 29|mXnQISlkbq9hg9pNMWWlu4VKBo1AYqHGlnwiJIDR7b8d1246',
+          Accept: 'application/json',// Include CSRF token
       }
   },
 

@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
+use Illuminate\Support\Facades\Broadcast;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +25,7 @@ use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+Broadcast::routes(['middleware' => ['auth:sanctum']]);
 //////////////////////////////////////////////// PRIVATE ROUTES ////////////////////////////////////////////////
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -69,5 +70,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('chatUserList',[ChatController::class, 'index']);
     Route::get('roomInformation/{id}',[ChatController::class, 'showRoom']);
     Route::post('send_message',[ChatController::class, 'sendMessage']);
+    Route::post('conversation',[ChatController::class, 'newConversation']);
 });
+Route::get('test',[ChatController::class, 'test']);
 

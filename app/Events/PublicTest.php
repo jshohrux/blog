@@ -7,10 +7,11 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class RoomPrivate implements ShouldBroadcast
+class PublicTest implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -19,10 +20,16 @@ class RoomPrivate implements ShouldBroadcast
      *
      * @return void
      */
-    public $user;
-    public function __construct($user)
+    public function __construct()
     {
-        $this->user = $user;
+        //
+    }
+
+
+    public function broadcastWith()
+    {
+         //echo"broadcastWith";
+        return  ['welcome'=>'welcome to the club'];
     }
 
     /**
@@ -30,12 +37,10 @@ class RoomPrivate implements ShouldBroadcast
      *
      * @return \Illuminate\Broadcasting\Channel|array
      */
-
-    public function broadcastWith(){
-        return  ['welcome'=> $this->user];
-    }
     public function broadcastOn()
     {
-        return new PrivateChannel('channel.1');
+        return new Channel('public');
     }
+
+
 }
