@@ -76,6 +76,13 @@ export default {
         }
     },
     async mounted() {
+        window.Echo.private('channel.' + 1).listen('RoomPrivate', (e) => {
+                    const store = useStoreData();
+                    store.message = e.mess;
+                    this.notifiCount = e.mess.length;
+                    console.log(e.mess);
+                    console.log(this.notifiCount);
+                });
         await this.chatUserList;
     },
 }

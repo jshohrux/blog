@@ -20,3 +20,6 @@ Broadcast::channel('channel.{id}', function ($user,$id) {
     return (int) $user->id === (int) $id;
     // return $user;
 });
+Broadcast::channel('public', function () {
+    return true;
+});
