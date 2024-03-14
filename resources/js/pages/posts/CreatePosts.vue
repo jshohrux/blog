@@ -51,6 +51,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     data() {
         return {
@@ -74,7 +76,7 @@ export default {
 
         submit() {
             axios
-                .post("/api/posts", this.fields, {
+                .post("posts", this.fields, {
                     headers: { "content-type": "multipart/form-data" },
                 })
                 .then(() => {
@@ -96,7 +98,7 @@ export default {
 
     mounted() {
         axios
-            .get("/api/categories")
+            .get("categories")
             .then((response) => (this.categories = response.data))
             .catch((error) => {
                 console.log(error);

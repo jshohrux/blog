@@ -30,7 +30,7 @@ class UserController extends Controller
 
     public function roles(Request $request)
     {
-        $roles = Role::where('name','<>',"Admin");
+        $roles = Role::all();
         return RoleResource::collection(
             $roles
         );

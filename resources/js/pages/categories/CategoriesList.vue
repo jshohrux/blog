@@ -37,6 +37,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -48,7 +50,7 @@ export default {
   methods: {
     destroy(id) {
       axios
-        .delete("/api/categories/" + id)
+        .delete("categories/" + id)
         .then((response) => {
           this.success = true;
           setInterval(() => {
@@ -62,7 +64,7 @@ export default {
     },
     fetchCategories() {
       axios
-        .get("/api/categories")
+        .get("categories")
         .then((response) => (this.categories = response.data))
         .catch((error) => {
           console.log(error);

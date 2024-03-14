@@ -16,10 +16,10 @@
 
             <label for="password_confirmation">Confirm password</label>
             <input type="password" id="password_confirmation" v-model="fields.password_confirmation" />
-            <label for="">Select</label>
-            <select class="form-control" v-model="fields.role">
-                <option value="5">Saler</option>
-                <option value="6">Client</option>
+            <label for="">Select </label>
+            <select class="form-control" v-model="fields.role" v-if="roles != null">
+                <option value="">Select</option>
+                <option :value="ro['id']" v-for="ro in roles['data']">{{ ro['name'] }}</option>
             </select>
             <button type="submit">Sign Up</button>
             <span>Have an account?<a href=""> Log in</a></span>
@@ -30,12 +30,15 @@
 <script>
 import { mapActions, mapState } from 'pinia'
 import { useStoreData } from '@/stores/store'
+import axios from 'axios';
+
 
 export default {
     data() {
         return {
             fields: {},
             errors: {},
+            roles: null,
         };
     },
     methods: {
@@ -50,6 +53,19 @@ export default {
 
         },
     },
+    mounted() {
+        axios
+            .get("roles")
+            .then((response) => {
+                this.roles = response.data;roles = response.data;
+                // console.log("response", response);
+                // this.store.postsData.meta.links = response.data.meta.links;
+                // this.store.postsData.data = response.data.data;
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
 };
 </script>
 

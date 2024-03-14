@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   props: ["id"],
   data() {
@@ -39,7 +41,7 @@ export default {
   methods: {
     submit() {
       axios
-        .put("/api/categories/" + this.id, this.field,{
+        .put("categories/" + this.id, this.field,{
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('token'),
                 Accept: 'application/json'
@@ -62,7 +64,7 @@ export default {
 
   mounted() {
     axios
-      .get("/api/categories/" + this.id)
+      .get("categories/" + this.id)
       .then((response) => (this.field = response.data))
       .catch((error) => {
         console.log(error);

@@ -13,7 +13,7 @@
         <div class="categories">
             <ul>
                 <li v-for="category in categories" :key="category.id">
-                    <a href="#" @click="filterByCategory(category.name)">{{category.name}}</a>
+                    <a href="#" @click="filterByCategory(category.name)">{{ category.name }}</a>
                 </li>
             </ul>
         </div>
@@ -28,7 +28,7 @@
                 </p>
                 <h4 style="font-weight: bolder">
                     <a href="single-blog.html"></a>
-                    <router-link :to="{name: 'SingleBlog',params: { slug: post.slug },}">{{ post.title }}</router-link>
+                    <router-link :to="{ name: 'SingleBlog', params: { slug: post.slug }, }">{{ post.title }}</router-link>
                 </h4>
             </div>
         </section>
@@ -43,13 +43,14 @@
 <script>
 import { mapActions, mapState } from 'pinia'
 import { useStoreData } from '@/stores/store'
+import axios from 'axios';
+
 export default {
     emits: ["updateSidebar"],
     data() {
         return {
-            // posts: [],
             title: "",
-            links: [],
+            store: useStoreData(),
         };
     },
     computed: {
@@ -60,14 +61,14 @@ export default {
 
         filterByCategory(name) {
             axios
-                .get("/api/posts", {
+                .get("posts", {
                     params: {
                         category: name,
                     },
                 })
                 .then((response) => {
-                    this.posts = response.data.data;
-                    this.links = response.data.meta.links;
+                    this.store.postsData.meta.links = response.data.meta.links;
+                    this.store.postsData.data = response.data.data;
                 })
                 .catch((error) => {
                     console.log(error);
@@ -87,21 +88,22 @@ export default {
     },
 
     watch: {
-        // title() {
-        //     axios
-        //         .get("/api/posts", {
-        //             params: {
-        //                 search: this.title,
-        //             },
-        //         })
-        //         .then((response) => {
-        //             this.posts = response.data.data;
-        //             this.links = response.data.meta.links;
-        //         })
-        //         .catch((error) => {
-        //             console.log(error);
-        //         });
-        // },
+        title() {
+            axios
+                .get("posts", {
+                    params: {
+                        search: this.title,
+                    },
+                })
+                .then((response) => {
+                    this.store.postsData.meta.links = response.data.meta.links;
+                    this.store.postsData.data = response.data.data;
+
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
     },
 
     mounted() {

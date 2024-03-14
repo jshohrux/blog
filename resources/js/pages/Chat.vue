@@ -26,29 +26,31 @@
                 </div>
             </div>
             <!-- <p>{{ conversation }}</p> -->
-          <div v-for="conver in conversation">
-              <RouterLink :to="{ name: 'Room', params: { id:conver['id'] }}">
-                  <div class="px-5 py-3 border-[1px] border-[#7a7777] border-x-0 -mt-[1px]" >
-                      <div class="flex gap-2 items-center cursor-pointer">
-                          <div class="bg-white w-fit h-fit px-2 text-center  font-semibold text-sm capitalize py-2 rounded-full">{{ getLetterAfterSpace(conver['conversation_clent']['name']) }}</div>
-                          <div>
-                              <h1 class="text-lg font-bold text-white">{{ conver['conversation_clent']['name'] }}</h1>
-                              <p>messafe</p>
-                          </div>
-                      </div>
-                  </div>
-              </RouterLink>
-          </div>
+            <div v-for="conver in conversation">
+                <RouterLink :to="{ name: 'Room', params: { id: conver['id'] } }">
+                    <div class="px-5 py-3 border-[1px] border-[#7a7777] border-x-0 -mt-[1px]">
+                        <div class="flex gap-2 items-center cursor-pointer">
+                            <div
+                                class="bg-white w-fit h-fit px-2 text-center  font-semibold text-sm capitalize py-2 rounded-full">
+                                {{ getLetterAfterSpace(conver['conversation_clent']['name']) }}</div>
+                            <div>
+                                <h1 class="text-lg font-bold text-white">{{ conver['conversation_clent']['name'] }}</h1>
+                                <p>messafe</p>
+                            </div>
+                        </div>
+                    </div>
+                </RouterLink>
+            </div>
         </div>
     </div>
 </template>
 <script setup>
-   function getLetterAfterSpace(text) {
+function getLetterAfterSpace(text) {
     const words = text.split(' ');
     const lastWord = words[words.length - 1];
     const lastLetter = lastWord.charAt(0);
     const firstLetters = text.charAt(0);
-    return firstLetters+lastLetter
+    return firstLetters + lastLetter
 }
 </script>
 <script>
@@ -56,13 +58,27 @@ import { mapActions, mapState } from 'pinia'
 import { useStoreData } from '@/stores/store'
 
 export default {
-     computed:{
-         ...mapActions(useStoreData,{ chatUserList: "chatUserList" }),
+    computed: {
+        ...mapActions(useStoreData, { chatUserList: "chatUserList" }),
         ...mapState(useStoreData, ["conversation"]),
-     },
-     async mounted() {
+    },
+
+    async mounted() {
+        window.Echo.channel('public').listen('Message', (e) => {
+            console.log('go public');
+            console.log(e);
+        });
+        // window.Echo.private('channel.1').listen('RoomPrivate', (e) => {
+        //     console.log(e);
+        //     console.log('private channel');
+        // });
+        // window.Echo.channel('public').listen('PublicTest', (e) => {
+        //     console.log('go public');
+        //     //code for displaying the serve data
+        //     console.log(e); // the data from the server
+        // })
         await this.chatUserList;
-     },
+    },
 }
 </script>
 <style></style>

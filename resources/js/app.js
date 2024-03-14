@@ -3,7 +3,6 @@ import { createApp } from 'vue';
 import App from '../js/App.vue'
 import '../css/app.css'
 import router from './router'
-import { BootstrapVue } from 'bootstrap-vue'
 // import 'bootstrap/dist/css/bootstrap.css';
 // import 'bootstrap-vue/dist/bootstrap-vue.css';
 import { createPinia } from 'pinia'
@@ -34,6 +33,10 @@ import { createPinia } from 'pinia'
 //         return Promise.reject(error);
 //     }
 // );
+
+
+
+
 
 
 const app = createApp(App);
