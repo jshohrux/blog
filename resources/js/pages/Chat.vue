@@ -25,8 +25,9 @@
                     </svg>
                 </div>
             </div>
-            <!-- <p>{{ conversation }}</p> -->
+<!--             <p>{{ conversation }}</p>-->
             <div v-for="conver in conversation">
+<!--                <p>{{conver}}asdasd</p>-->
                 <RouterLink :to="{ name: 'Room', params: { id: conver['id'] } }">
                     <div class="px-5 py-3 border-[1px] border-[#7a7777] border-x-0 -mt-[1px]">
                         <div class="flex gap-2 items-center cursor-pointer">
@@ -64,10 +65,10 @@ export default {
     },
 
     async mounted() {
-        window.Echo.channel('public').listen('Message', (e) => {
-            console.log('go public');
-            console.log(e);
-        });
+        // window.Echo.channel('public').listen('Message', (e) => {
+        //     console.log('go public');
+        //     console.log(e);
+        // });
         // window.Echo.private('channel.1').listen('RoomPrivate', (e) => {
         //     console.log(e);
         //     console.log('private channel');

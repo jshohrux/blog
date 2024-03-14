@@ -2,17 +2,18 @@
     <div id="backend-view">
         <form @submit.prevent="submit" method="post">
             <h3>Login Here</h3>
-            <span v-if="errors" class="error">{{ errors[0] }}</span>
+
+            <span v-if="errors" class="error">{{ errors[0]}}</span>
             <label for="email">Email</label>
-            <input type="text" id="email" v-model="fields.email" />
+            <input type="text" id="email" v-model="fields.email" class="border" />
             <span v-if="errors.email" class="error">{{ errors.email[0] }}</span>
 
             <label for="password">Password</label>
-            <input type="password" id="password" v-model="fields.password" />
+            <input type="password" id="password" v-model="fields.password" class="border" />
             <span v-if="errors.password" class="error">{{ errors.password[0] }}</span>
 
             <button type="submit">Log In</button>
-            <span>Don't have an account? <a href="">Sign up</a></span>
+            <span>Don't have an account? <router-link :to="{ name: 'Register' }">Sign up</router-link></span>
         </form>
     </div>
 </template>
@@ -36,7 +37,10 @@ export default {
                     this.$router.push({ name: "Home" });
                     this.$emit("updateSidebar");
                 })
-                .catch((err) => console.log("error", err));
+                .catch((err) => {
+                    console.log("error", err)
+                    this.errors = err.message;
+                });
         },
     },
 };

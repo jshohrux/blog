@@ -10,6 +10,9 @@ const ChatService = {
     convirsationShowByRoomId(id){
         return axios.get('roomInformation/'+id,{headers:{'Content-Type': 'application/json;'}})
     },
+    Conversation(data){
+        return axios.post('conversation',{...data},{headers:{'Content-Type': 'application/json;'}})
+    },
 }
 
 export default ChatService

@@ -70,6 +70,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('chatUserList',[ChatController::class, 'index']);
     Route::get('roomInformation/{id}',[ChatController::class, 'showRoom']);
     Route::post('send_message',[ChatController::class, 'sendMessage']);
+    Route::post('conversation',[ChatController::class, 'newConversation']);
 });
 Route::get('test',[ChatController::class, 'test']);
 

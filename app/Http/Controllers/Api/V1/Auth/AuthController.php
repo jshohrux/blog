@@ -18,8 +18,10 @@ class AuthController extends Controller
 
         $validator = Validator::make($request->all(),[
             'name'=>'required',
-            'email'=>'required|unique:users',
-            'password'=>'required|min:8',
+            'email'=>'required|email|unique:users',
+            'password'=>'required|min:8|same:password_confirmation',
+            'password_confirmation'=>'required',
+            'role'=>'required|integer'
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -43,7 +45,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required',
+            'email' => 'required|email',
             'password' => 'required|min:8',
         ]);
 

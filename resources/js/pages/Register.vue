@@ -3,24 +3,24 @@
         <form @submit.prevent="submit" class="form-control">
             <h3>Sign Up Here</h3>
             <label for="name">Name</label>
-            <input type="text" id="name" v-model="fields.name" />
+            <input type="text" id="name" v-model="fields.name" class="border" />
             <span v-if="errors.name" class="error">{{ errors.name[0] }}</span>
 
             <label for="email">Email</label>
-            <input type="text" id="email" v-model="fields.email" />
+            <input type="text" id="email" v-model="fields.email" class="border" />
             <span v-if="errors.email" class="error">{{ errors.email[0] }}</span>
 
             <label for="password">Password</label>
-            <input type="password" id="password" v-model="fields.password" />
+            <input type="password" id="password" v-model="fields.password" class="border" />
             <span v-if="errors.password" class="error">{{ errors.password[0] }}</span>
 
             <label for="password_confirmation">Confirm password</label>
-            <input type="password" id="password_confirmation" v-model="fields.password_confirmation" />
+            <input type="password" id="password_confirmation" v-model="fields.password_confirmation"  class="border"/>
             <label for="">Select </label>
-            <select class="form-control" v-model="fields.role" v-if="roles != null">
-                <option value="">Select</option>
+            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" v-model="fields.role" v-if="roles != null">
                 <option :value="ro['id']" v-for="ro in roles['data']">{{ ro['name'] }}</option>
             </select>
+            <span v-if="errors.role" class="error">{{ errors.role[0] }}</span>
             <button type="submit">Sign Up</button>
             <span>Have an account?<a href=""> Log in</a></span>
         </form>
@@ -49,7 +49,10 @@ export default {
                 .then((user) => {
                     this.$router.push({ name: "Dashboard" });
                 })
-                .catch((err) => console.log("error", err));
+                .catch((err) => {
+                    console.log("error", err)
+                    this.errors = err.errors;
+                });
 
         },
     },
@@ -57,7 +60,7 @@ export default {
         axios
             .get("roles")
             .then((response) => {
-                this.roles = response.data;roles = response.data;
+                this.roles = response.data;
                 // console.log("response", response);
                 // this.store.postsData.meta.links = response.data.meta.links;
                 // this.store.postsData.data = response.data.data;

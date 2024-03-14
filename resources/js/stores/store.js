@@ -33,7 +33,7 @@ export const useStoreData = defineStore("dataStore", {
                     .catch((error) => {
                         this.error = error.response;
                         this.isLogedIn = false;
-                        reject(error);
+                        reject(error.response.data);
                     })
                     .finally(() => {
                         this.isLoading = false;
@@ -230,6 +230,26 @@ export const useStoreData = defineStore("dataStore", {
                     .catch((error) => {
                         this.error = error;
                         this.roomData = null;
+                        reject(error.response.data);
+                    })
+                    .finally(() => {
+                        this.isLoading = false;
+                    });
+            });
+        },
+        conver(data) {
+            return new Promise((resolve, reject) => {
+                this.isLoading = true;
+                ChatService.Conversation(data)
+                    .then((response) => {
+                        console.log(response);
+                        this.conversation = response.data;
+                        this.error = null;
+                        resolve(response.data);
+                    })
+                    .catch((error) => {
+                        this.error = error;
+                        this.conversation = null;
                         reject(error.response.data);
                     })
                     .finally(() => {
