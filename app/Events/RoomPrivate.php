@@ -19,10 +19,10 @@ class RoomPrivate implements ShouldBroadcast
      *
      * @return void
      */
-    public $user;
-    public function __construct($user)
+    // public $user;
+    public function __construct()
     {
-        $this->user = $user;
+        // $this->user = $user;
     }
 
     /**
@@ -32,8 +32,11 @@ class RoomPrivate implements ShouldBroadcast
      */
 
     public function broadcastWith(){
-        return  ['welcome'=> $this->user];
+        return  ['welcome'=> 'sadasdasd adasd'];
     }
+    // public function broadcastWith(){
+    //     return  ['welcome'=> $this->user];
+    // }
     public function broadcastOn()
     {
         return new PrivateChannel('channel.1');

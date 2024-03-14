@@ -1,5 +1,5 @@
-import _ from 'lodash';
-window._ = _;
+// import _ from 'lodash';
+// window._ = _;
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -45,23 +45,23 @@ window.Pusher = Pusher;
 
 const token = localStorage.getItem('token')
 window.Echo = new Echo({
-  broadcaster: 'pusher',
-  host: '127.0.0.1:8000',
-  key: '18f8d7457b2a1c539116333442003',
-  wsHost:'127.0.0.1',
-  wsPort: 6001,
-  cluster: "ap2",
-  forceTLS: false,
-  disableStats: true,
-  encrypted: true,
-  authEndpoint :'http://127.0.0.1:8000/api/broadcasting/auth',
-  enabledTransports: ['ws', 'wss'],
-  auth:{
-      headers: {
-          Authorization: 'Bearer 29|mXnQISlkbq9hg9pNMWWlu4VKBo1AYqHGlnwiJIDR7b8d1246',
-          Accept: 'application/json',// Include CSRF token
-      }
-  },
+    broadcaster: 'pusher',
+    host: '127.0.0.1:8000',
+    key: '18f8d7457b2a1c539116333442003',
+    wsHost: '127.0.0.1',
+    wsPort: 6001,
+    cluster: "ap2",
+    forceTLS: false,
+    disableStats: true,
+    encrypted: true,
+    authEndpoint: 'http://127.0.0.1:8000/api/broadcasting/auth',
+    enabledTransports: ['ws', 'wss'],
+    auth: {
+        headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+            Accept: 'application/json',// Include CSRF token
+        }
+    },
 
 
 });

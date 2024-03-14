@@ -29,7 +29,7 @@
                     <li v-if="store.isLogedIn && store.user.role.name == 'Saler'">
                         <router-link @click="hideOverlay" :to="{ name: 'Dashboard' }">Dashboard</router-link>
                     </li>
-                    <li v-if="store.isLogedIn && store.user.role.name == 'Saler'">
+                    <li v-if="store.isLogedIn">
                         <router-link @click="hideOverlay" :to="{ name: 'Chat' }">Chat</router-link>
                     </li>
                     <li v-if="store.isLogedIn">

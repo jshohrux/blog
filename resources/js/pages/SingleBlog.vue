@@ -72,7 +72,7 @@ export default {
 
             this.conver(data)
                 .then((res) => {
-                    // this.$router.push({ name: "Dashboard" });
+                    this.$router.push({ name: "Chat" });
                 })
                 .catch((err) => {
                     console.log("error", err)

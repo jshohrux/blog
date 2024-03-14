@@ -11,10 +11,11 @@
                     </div>
 
                 </div>
-                <div class="flex items-start  flex-col w-full" v-else-if="data['sender_id'] !== user['id'] && data['sender_id'] != null">
+                <div class="flex items-start  flex-col w-full"
+                    v-else-if="data['sender_id'] !== user['id'] && data['sender_id'] != null">
                     <div class="flex gap-3 items-center">
                         <div class="bg-white w-fit  p-2 font-semibold text-md  rounded-full">
-                            {{getLetterAfterSpace(data['sender_user']['name']) }}
+                            {{ getLetterAfterSpace(data['sender_user']['name']) }}
                         </div>
                         <div class="border rounded-xl bg-white leading-relaxed">
                             <div class="px-5 py-2 text-black  max-w-96 break-all">
@@ -74,11 +75,17 @@ export default {
 
     },
     watch: {
+
         user(newValue, oldValue) {
-            window.Echo.private('channel.1').listen('RoomPrivate', (e) => {
-                console.log(e);
-                console.log('asdasd  ishlamoqda ishlamoqda ishlamoq');
-            });
+            if (newValue != null) {
+                window.Echo.private('channel.1').listen('RoomPrivate', (e) => {
+                    //   const store = useStoreData();
+                    //   store.message = e.mess;
+                    //   this.notifiCount =  e.mess.length;
+                    console.log(e + 'asalom');
+                    //   console.log(this.notifiCount);
+                });
+            }
         }
     },
     methods: {
@@ -100,6 +107,18 @@ export default {
         }
     },
     async mounted() {
+        window.Echo.private('channel.1').listen('RoomPrivate', (e) => {
+            //   const store = useStoreData();
+            //   store.message = e.mess;
+            //   this.notifiCount =  e.mess.length;
+            console.log(e + 'asalom');
+            //   console.log(this.notifiCount);
+        });
+        window.Echo.channel('public').listen('PublicTest', (e) => {
+            console.log('go public');
+            //code for displaying the serve data
+            console.log(e); // the data from the server
+        })
         await this.roomInfo(this.param);
     },
 }

@@ -44,8 +44,13 @@ class User extends Authenticatable
     ];
     public function conversation()
     {
-        return $this->hasMany(Conver::class,'seller_id')->with('conversationClent');
+        if ($this->role->name === 'Saler') {
+            return $this->hasMany(Conver::class,'seller_id')->with('conversationClent');
+        }elseif($this->role->name === 'Client') {
+            return $this->hasMany(Conver::class, 'clent_id')->with('conversationClent');
+        }
     }
+
 
     public function posts()
     {

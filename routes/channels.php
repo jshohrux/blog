@@ -16,16 +16,16 @@ use Illuminate\Support\Facades\Broadcast;
 // Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 //     return (int) $user->id === (int) $id;
 // });
-Broadcast::channel('public', function () {
+// Broadcast::channel('public', function ($user) {
+//     return true;
+// });
+
+Broadcast::channel('channel.1', function () {
+    // return (int) $user->id === (int) $id;
     return true;
-});
-
-Broadcast::channel('channel.{id}', function ($user,$id) {
-    return (int) $user->id === (int) $id;
-    // return true;
     // return true;
 
 });
-Broadcast::channel('public', function () {
+Broadcast::channel('public', function ($user) {
     return true;
 });

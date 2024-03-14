@@ -17,14 +17,12 @@ class PublicTest implements ShouldBroadcast
 
     /**
      * Create a new event instance.
-     *
-     * @return void
      */
+    // public $message;
     public function __construct()
     {
-        //
+        // $this->message = $message;
     }
-
 
     public function broadcastWith()
     {
@@ -35,12 +33,11 @@ class PublicTest implements ShouldBroadcast
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return \Illuminate\Broadcasting\Channel|array
+     * @return array<int, \Illuminate\Broadcasting\Channel>
      */
+
     public function broadcastOn()
     {
         return new Channel('public');
     }
-
-
 }

@@ -72,6 +72,9 @@ return [
             'capacity' => null,
             'enable_client_messages' => false,
             'enable_statistics' => true,
+            'allowed_origins' => [
+                // env('LARAVEL_WEBSOCKETS_DOMAIN'),
+            ],
         ],
     ],
 

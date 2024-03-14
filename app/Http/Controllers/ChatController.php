@@ -16,6 +16,7 @@ class ChatController extends Controller
     public function index()
     {
         $conversation = Auth::user()->conversation;
+        // $conversation = Conver::all();
         return $conversation;
     }
     public function showRoom(Request $request, $id)
@@ -27,8 +28,9 @@ class ChatController extends Controller
     {
         $conversation = Conver::find($request->get('param'));
         $user = User::find(1);
-        // broadcast(new PublicTest($user));
+        broadcast(new PublicTest($user));
         RoomPrivate::dispatch($user);
+        PublicTest::dispatch('salom');
         $mess = Room::create([
             'sender_id' => $request->get('userId'),
             'getter_id' => $conversation->clent_id,
@@ -41,7 +43,7 @@ class ChatController extends Controller
     }
     public function test(){
         $user = User::find(1);
-        // broadcast(new PublicTest($user));
+        broadcast(new PublicTest($user));
         RoomPrivate::dispatch($user);
         PublicTest::dispatch();
         return "Event has been sent!";

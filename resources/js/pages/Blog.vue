@@ -24,7 +24,7 @@
                 <img :src="post.imagePath" alt="" />
                 <p>
                     {{ post.created_at }}
-                    <span style="float: right">Written By {{ post.user }}</span>
+                    <span style="float: right">Written By {{ post.user.name }}</span>
                 </p>
                 <h4 style="font-weight: bolder">
                     <a href="single-blog.html"></a>

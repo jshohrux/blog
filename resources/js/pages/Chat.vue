@@ -27,8 +27,8 @@
             </div>
 <!--             <p>{{ conversation }}</p>-->
             <div v-for="conver in conversation">
-<!--                <p>{{conver}}asdasd</p>-->
-                <RouterLink :to="{ name: 'Room', params: { id: conver['id'] } }">
+               <!-- <p>{{conver}}asdasd</p> -->
+                <RouterLink :to="{ name: 'Room', params: { id: conver['id'] } }" v-if="conver['conversation_clent'] != null">
                     <div class="px-5 py-3 border-[1px] border-[#7a7777] border-x-0 -mt-[1px]">
                         <div class="flex gap-2 items-center cursor-pointer">
                             <div
@@ -61,24 +61,11 @@ import { useStoreData } from '@/stores/store'
 export default {
     computed: {
         ...mapActions(useStoreData, { chatUserList: "chatUserList" }),
-        ...mapState(useStoreData, ["conversation"]),
+        ...mapState(useStoreData, ["conversation","user"]),
     },
 
     async mounted() {
 
-        // window.Echo.channel('public').listen('Message', (e) => {
-        //     console.log('go public');
-        //     console.log(e);
-        // });
-        // window.Echo.private('channel.1').listen('RoomPrivate', (e) => {
-        //     console.log(e);
-        //     console.log('private channel');
-        // });
-        window.Echo.channel('public').listen('PublicTest', (e) => {
-            console.log('go public');
-            //code for displaying the serve data
-            console.log(e); // the data from the server
-        })
         await this.chatUserList;
     },
 }
