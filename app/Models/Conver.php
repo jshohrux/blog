@@ -21,6 +21,10 @@ class Conver extends Model
     {
         return $this->belongsTo(User::class,'clent_id');
     }
+    public function conversationSeller()
+    {
+        return $this->belongsTo(User::class,'seller_id');
+    }
     public function room()
     {
         return $this->hasMany(Room::class)->with('senderUser','getterUser');

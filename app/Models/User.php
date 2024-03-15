@@ -47,7 +47,7 @@ class User extends Authenticatable
         if ($this->role->name === 'Saler') {
             return $this->hasMany(Conver::class,'seller_id')->with('conversationClent');
         }elseif($this->role->name === 'Client') {
-            return $this->hasMany(Conver::class, 'clent_id')->with('conversationClent');
+            return $this->hasMany(Conver::class, 'clent_id')->with('conversationSeller');
         }
     }
 

@@ -27,7 +27,20 @@
             </div>
 <!--             <p>{{ conversation }}</p>-->
             <div v-for="conver in conversation">
-               <!-- <p>{{conver}}asdasd</p> -->
+<!--                <p>{{conver}}</p>-->
+                <RouterLink :to="{ name: 'Room', params: { id: conver['id'] } }" v-if="conver['conversation_seller'] != null">
+                    <div class="px-5 py-3 border-[1px] border-[#7a7777] border-x-0 -mt-[1px]">
+                        <div class="flex gap-2 items-center cursor-pointer">
+                            <div
+                                class="bg-white w-fit h-fit px-2 text-center  font-semibold text-sm capitalize py-2 rounded-full">
+                                {{ getLetterAfterSpace(conver['conversation_seller']['name']) }}</div>
+                            <div>
+                                <h1 class="text-lg font-bold text-white">{{ conver['conversation_seller']['name'] }}</h1>
+                                <p>message</p>
+                            </div>
+                        </div>
+                    </div>
+                </RouterLink>
                 <RouterLink :to="{ name: 'Room', params: { id: conver['id'] } }" v-if="conver['conversation_clent'] != null">
                     <div class="px-5 py-3 border-[1px] border-[#7a7777] border-x-0 -mt-[1px]">
                         <div class="flex gap-2 items-center cursor-pointer">
@@ -36,7 +49,7 @@
                                 {{ getLetterAfterSpace(conver['conversation_clent']['name']) }}</div>
                             <div>
                                 <h1 class="text-lg font-bold text-white">{{ conver['conversation_clent']['name'] }}</h1>
-                                <p>messafe</p>
+                                <p>message</p>
                             </div>
                         </div>
                     </div>
